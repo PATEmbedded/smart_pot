@@ -95,6 +95,9 @@ void setup() {
 void loop() {
   unsigned long currentTime = millis();
   
+  // Check for serial commands
+  updateConfig();
+  
   // Check sensors at configured interval
   if (currentTime - lastCheckTime >= config.checkInterval) {
     lastCheckTime = currentTime;
@@ -126,22 +129,20 @@ void readSensors() {
   temperature = dht.readTemperature();
   humidity = dht.readHumidity();
   
-  // Handle sensor errors
+  // Handle sensor errors - keep NaN to indicate invalid reading
   if (isnan(temperature) || isnan(humidity)) {
     Serial.println("Warning: Failed to read from DHT sensor!");
-    temperature = 0;
-    humidity = 0;
   }
 }
 
 void displayReadings() {
   Serial.println("\n=== Sensor Readings ===");
   
-  // Soil Moisture
-  int moisturePercent = map(soilMoistureValue, 1023, 0, 0, 100);
+  // Soil Moisture (mapped value is relative, not calibrated percentage)
+  int moistureLevel = map(soilMoistureValue, 1023, 0, 0, 100);
   Serial.print("Soil Moisture: ");
-  Serial.print(moisturePercent);
-  Serial.print("% (");
+  Serial.print(moistureLevel);
+  Serial.print("% (raw: ");
   Serial.print(soilMoistureValue);
   Serial.println(")");
   
@@ -185,7 +186,7 @@ void checkPlantConditions() {
   }
   
   // Check if temperature is outside optimal range
-  if (temperature > 0) {  // Valid reading
+  if (!isnan(temperature)) {  // Valid reading
     if (temperature < config.optimalTempMin) {
       Serial.println("⚠️  Alert: Temperature is too low!");
       needsAttention = true;
@@ -195,10 +196,10 @@ void checkPlantConditions() {
     }
   }
   
-  // Blink LED if plant needs attention
+  // Turn on LED if plant needs attention (will turn off on next check if resolved)
   if (needsAttention) {
     digitalWrite(STATUS_LED_PIN, HIGH);
-    delay(100);
+  } else {
     digitalWrite(STATUS_LED_PIN, LOW);
   }
 }

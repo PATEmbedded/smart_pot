@@ -22,7 +22,7 @@ This document lists all the libraries required for the Smart Pot project and how
 
 **Library Name**: `DHT sensor library` by Adafruit
 
-**Version**: 1.4.4 or later
+**Version**: Latest stable version (1.4.4 or later)
 
 **Installation via Library Manager**:
 - Search: "DHT sensor library"
@@ -40,7 +40,7 @@ This document lists all the libraries required for the Smart Pot project and how
 
 **Library Name**: `Adafruit Unified Sensor`
 
-**Version**: 1.1.9 or later
+**Version**: Latest stable version (1.1.9 or later)
 
 **Installation via Library Manager**:
 - Search: "Adafruit Unified Sensor"
@@ -185,9 +185,9 @@ float humidity = dht.readHumidity();      // Read humidity %
 ## Version Compatibility
 
 The Smart Pot code is compatible with:
-- Arduino IDE 1.8.0 or later
-- DHT sensor library 1.4.0 or later
-- Adafruit Unified Sensor 1.1.0 or later
+- Arduino IDE 1.8.0 or later (including 2.x versions)
+- DHT sensor library (latest stable version recommended)
+- Adafruit Unified Sensor (latest stable version recommended)
 
 Tested on:
 - Arduino Uno (ATmega328P)

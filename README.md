@@ -108,8 +108,9 @@ Once running, the Smart Pot will:
 4. Automatically water when soil is too dry
 
 ### Status LED Indicators
-- **Steady On**: Plant needs attention (low light, high/low temp, etc.)
-- **On During Watering**: Water pump is active
+- **Steady On**: Plant needs attention (low moisture, low/high light, high/low temp)
+- **Off**: All conditions are optimal
+- **On During Watering**: Water pump is active (LED turns on during watering)
 - **3 Blinks at Startup**: System initialized successfully
 
 ### Serial Commands
